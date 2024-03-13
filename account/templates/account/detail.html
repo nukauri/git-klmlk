@@ -1,0 +1,39 @@
+{% extends 'core/base.html'%}
+
+{% block title %}{{ account.description}} {% endblock %}
+
+{% block content%}
+<div class="grid grid-cols-5 gap-6">
+
+    <div class="col-span-3">
+        <img src="{{ account.documentImage.url }}" class="rounded-xl">
+    </div>
+    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{ account.areaID }}</h1>
+        <h2 class="mb-6 text-2xl">{{ account.documentType }}</h2>
+        <h2 class="mb-6 text-2xl">{{ account.documentDate }}</h2>
+        {% if account.description %}
+            <p class="text-gray-700">
+                <strong class="text-gray-500">Description:</strong><br>
+                {{ account.description }}
+            </p>
+        {% endif %}
+        <p class="text-gray-500"><strong>Price: </strong>{{ account.price }}</p>
+        <p class="text-gray-500"><strong>Seller: </strong>{{ account.supplier }}</p>
+    
+
+
+
+            <div class="mt-6 p-6 bg-white rounded-xl">
+                
+
+                <a href="{% url 'account:edit' account.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
+                <a href="{% url 'account:delete' account.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+            </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

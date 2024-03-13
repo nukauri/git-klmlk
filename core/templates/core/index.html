@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Merhaba {% endblock %}
+{% block content %}
+
+<nav class="px-6 py-2 border-b bg-teal-800 items-center justify-between flex">
+    <h1 class="text-black text-2xl font-bold">Giderler</h1>
+    <div class="col-span-1">
+
+
+    </div>
+ 
+ 
+     <div>
+
+         <a href="{% url 'account:new' %}" class="text-black px-12 text-2xl font-bold" >Yeni Kayıt</a>
+     </div>
+ 
+</nav>
+
+<div class="mt-1 px-1 py-1 bg-teal-700 rounded-xl flex">
+    <div class="flex-1">
+        <nav class="flex w-72 h-full bg-teal-500">
+            <div class="w-full flex mx-auto px-6 py-8">
+                <form method="get" action="{% url 'core:index'%}">
+                    {{form.as_p}}
+                    <input type="submit" value="submit" class="items-center h-10 rounded-xl bg-teal-800"/>
+                </form>
+            </div>
+        </nav>
+    </div>
+ <div class="flex-initial" >
+
+    {% for account in accounts %}
+    <div class="flex  bg-teal-600 px-1 mt-1 w-full">
+        <a href="{% url 'account:detail' account.id %}">
+            <div class="flex flex-row w-full">
+
+                <div class="bg-white ">
+                    <h5 class="text-xl">{{ account.documentGroup }}/{{ account.documentType }}</h5> 
+                </div>
+                <div class="bg-white">
+                   <h5 class="text-xl">Price: {{ account.price }} Date: {{ account.documentDate}}</h5> 
+                </div>
+                <div class="bg-white">
+                    <h5 class="text-xl">{{ account.description }}</h5> 
+                 </div>
+                <div class="bg-white ">
+                    <h5 class="text-xl">Bölge: {{ account.area }}</h5> 
+                </div>
+                <div class="bg-white ">
+                    <h5 class="text-xl">Proje: {{ account.project }} </h5> 
+                </div>
+                 <div class="bg-white ">
+                    <h5 class="text-xl">Satıcı: {{ account.supplier }}</h5> 
+                    
+                 </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+ </div>
+</div>
+
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if accounts.has_previous %}
+                <a class="h-10 bg-blue-500  text-white" href="?page=1">&laquo; first</a>
+                <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}.
+            </span>
+    
+            {% if accounts.has_next %}
+                <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.next_page_number }}">next</a>
+                <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock %}
