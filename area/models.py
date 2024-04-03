@@ -5,11 +5,13 @@ class Area(models.Model):
         class AreaTypeChoices(models.TextChoices):
              TENTE="T"
              CARAVAN = "C"
-             TINYHOUSE = "H"
+             ROOM = "H"
+             NOTAREA = "N"
 
         name = models.CharField(max_length=30)
         capacity = models.IntegerField(blank=True,null=True)
         areaType = models.CharField(max_length =1,choices=AreaTypeChoices.choices)
+        
 
         class Meta:
             ordering = ('name',)

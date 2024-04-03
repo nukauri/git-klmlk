@@ -42,15 +42,19 @@ class DocumentGroup(models.Model):
 
 
 class DocumentType(models.Model):
-    name = models.CharField(max_length=255)
-    accountType =  models.ForeignKey(AccountType,related_name='documentTypes',on_delete=models.CASCADE)
+            class AccountTypeChoices(models.TextChoices):
+             Gelir="GL"
+             Gider = "GD"
 
-    class Meta:
-        ordering = ('name',)
-        verbose_name_plural = 'DocumentTypes'
+            name = models.CharField(max_length=255)
+            accountType =  models.CharField(max_length =2,choices=AccountTypeChoices.choices)
 
-    def __str__(self):
-        return self.name
+            class Meta:
+                ordering = ('name',)
+                verbose_name_plural = 'DocumentTypes'
+
+            def __str__(self):
+                return self.name
     
 class Project(models.Model):
     name = models.CharField(max_length=100)

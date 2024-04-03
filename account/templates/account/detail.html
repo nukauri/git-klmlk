@@ -6,20 +6,24 @@
 <div class="grid grid-cols-5 gap-6">
 
     <div class="col-span-3">
-        <img src="{{ account.documentImage.url }}" class="rounded-xl">
+        {% if account.documentImage %}
+        <img src="{{ account.documentImage.url}}" class="rounded-xl">
+        {% endif %}
     </div>
     <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
-        <h1 class="mb-6 text-3xl">{{ account.areaID }}</h1>
-        <h2 class="mb-6 text-2xl">{{ account.documentType }}</h2>
-        <h2 class="mb-6 text-2xl">{{ account.documentDate }}</h2>
+        <h1 class="mb-6 text-3xl">{{ account.area }}</h1>
+        <h2 class="mb-6 text-2xl">{{  account.documentType }}</h2>
+        <h2 class="mb-6 text-2xl">{{ account.documentDate |date:"d/m/Y" }}</h2>
         {% if account.description %}
             <p class="text-gray-700">
-                <strong class="text-gray-500">Description:</strong><br>
+                <strong class="text-gray-500">Açıklama:</strong><br>
                 {{ account.description }}
             </p>
         {% endif %}
-        <p class="text-gray-500"><strong>Price: </strong>{{ account.price }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ account.supplier }}</p>
+        <p class="text-gray-500"><strong>Tutar: </strong>{{ account.price }}</p>
+        <p class="text-gray-500"><strong>Satıcı: </strong>{{ account.supplier }}</p>
+        <p class="text-gray-500"><strong>Proje: </strong>{{ account.project }}</p>
+        <p class="text-gray-500"><strong>Konaklama: </strong>{{ account.accomodation }}</p>
     
 
 
