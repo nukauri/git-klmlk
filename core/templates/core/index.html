@@ -12,8 +12,8 @@
  
  
      <div>
-
-         <a href="{% url 'account:new' %}" class="text-black px-12 text-2xl font-bold" >Yeni Kayıt</a>
+        <a href="{% url 'account:newGelir' %}" class="text-black px-12 text-2xl font-bold bg-sky-600 rounded-lg" >Yeni Gelir</a>
+         <a href="{% url 'account:new' %}" class="text-black px-12 text-2xl font-bold bg-sky-600 rounded-lg" >Yeni Gider</a>
      </div>
  
 </nav>
@@ -45,9 +45,9 @@
                 </tr>
             </thead>
             {% for account in accounts %}
-            <a href="{% url 'account:detail' account.id %}">
+            <a href="{% url 'account:detailgl' account.id %}">
                 <tr>
-                 <td class="border border-slate-300"><a href="{% url 'account:detail' account.id %}">{{ account.documentDate |date:"d/m/Y"}}</a></td>
+                 <td class="border border-slate-300"><a href="{% url 'account:detailgl' account.id %}">{{ account.documentDate |date:"d/m/Y"}}</a></td>
                  <td class="border border-slate-300">{{ account.documentType }}</td>
                  <td class="border border-slate-300">{{ account.description }}</td>
                  <td class="border border-slate-300">{{ account.price |floatformat:0 }}</td>

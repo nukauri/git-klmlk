@@ -7,6 +7,8 @@ from accomodation import models as accomodation_models
 # Create your models here.
 class Supplier(models.Model):
     name = models.CharField(max_length=255)
+    isCustomer = models.BooleanField(blank=True,null=True)
+    isSupplier = models.BooleanField(blank=True,null=True)
     address = models.CharField(max_length=255,blank=True,null=True)
     contact = models.CharField(max_length=35,blank=True,null=True)
     phoneNumber = models.CharField(max_length=20,blank=True,null=True)
@@ -67,11 +69,45 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+class PayType(models.Model):
+    name = models.CharField(max_length=100)
+    
 
+    class Meta:
+        ordering = ('name',)
+        verbose_name_plural = 'PayType'
+
+    def __str__(self):
+        return self.name
+    
+class Banka(models.Model):
+    name = models.CharField(max_length=100)
+    
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name_plural = 'Banka'
+
+    def __str__(self):
+        return self.name
+    
+class Document(models.Model):
+    name = models.CharField(max_length=100)
+    
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name_plural = 'Document'
+
+    def __str__(self):
+        return self.name
 
 class Account(models.Model):
     documentGroup =  models.ForeignKey(DocumentGroup,related_name='accounts',on_delete=models.CASCADE)
     documentType = models.ForeignKey(DocumentType,related_name='accounts',on_delete=models.CASCADE)
+    document = models.ForeignKey(Document,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
+    payType = models.ForeignKey(PayType,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
+    banka = models.ForeignKey(Banka,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
     documentDate = models.DateField()
     documentNo = models.CharField(max_length=30)
     description = models.CharField(max_length=255,blank=True,null=True)

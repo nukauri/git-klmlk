@@ -25,4 +25,4 @@ class Accomodation(models.Model):
         verbose_name_plural = 'Accomodations'
 
     def __str__(self):
-        return self.name
+        return f'{self.name}-{self.startDate:"%m/%d/%Y"}'

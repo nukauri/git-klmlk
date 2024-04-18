@@ -1,0 +1,43 @@
+{% extends 'core/base.html'%}
+
+{% block title %}{{ account.description}} {% endblock %}
+
+{% block content%}
+<div class="grid grid-cols-5 gap-6">
+
+    <div class="col-span-3">
+        {% if account.documentImage %}
+        <img src="{{ account.documentImage.url}}" class="rounded-xl">
+        {% endif %}
+    </div>
+    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{ account.area }}</h1>
+        <h2 class="mb-6 text-2xl">{{  account.documentType }}</h2>
+        <h2 class="mb-6 text-2xl">{{ account.documentDate |date:"d/m/Y" }}</h2>
+        {% if account.description %}
+            <p class="text-gray-700">
+                <strong class="text-gray-500">Açıklama:</strong><br>
+                {{ account.description }}
+            </p>
+        {% endif %}
+        <p class="text-gray-500"><strong>Tutar: </strong>{{ account.price }}</p>
+        <p class="text-gray-500"><strong>Satıcı: </strong>{{ account.supplier }}</p>
+        <p class="text-gray-500"><strong>Proje: </strong>{{ account.project }}</p>
+        <p class="text-gray-500"><strong>Konaklama: </strong>{{ account.accomodation }}</p>
+    
+
+
+
+            <div class="mt-6 p-6 bg-white rounded-xl">
+                
+
+                <a href="{% url 'account:editGelir' account.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
+                <a href="{% url 'account:delete' account.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+            </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
