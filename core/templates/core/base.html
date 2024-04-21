@@ -16,11 +16,12 @@
     <div>
       
         {% if request.user.is_authenticated %}
-        <a href="{% url 'index' %}" class="text-white py-4 px-8 bg-slate-600  rounded-lg" >Anasayfa</a>
-        <a href="{% url 'core:logout' %}" class="text-white py-4 px-8 bg-sky-600 rounded-lg" >Logout</a>
+        <a href="{% url 'index' %}" class="text-white py-4 px-8 bg-green-500  rounded-lg" >Konaklama</a>
+        <a href="{% url 'index' %}" class="text-white py-4 px-8 bg-green-500  rounded-lg" >Gelir/Gider</a>
+        <a href="{% url 'core:logout' %}" class="text-white py-4 px-8 bg-red-700 rounded-lg" >Çıkış</a>
         {% else %}
-        <a href="{% url 'core:login' %}" class="text-white py-4 px-8 bg-slate-600  rounded-lg" >Login</a>
-        <a href="{% url 'core:signup' %}" class="text-white py-4 px-8 bg-sky-600 rounded-lg" >Sign up</a>
+        <a href="{% url 'core:login' %}" class="text-white py-4 px-8 bg-slate-600  rounded-lg" >Giriş</a>
+        <a href="{% url 'core:signup' %}" class="text-white py-4 px-8 bg-sky-600 rounded-lg" >Kayıt</a>
         {% endif %}
     </div>
 

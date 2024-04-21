@@ -2,7 +2,7 @@ from django import forms
 
 
 
-from .models import Account,Supplier,DocumentType
+from .models import Account,Supplier,DocumentType,Debit
 
 INPUT_CLASSES = 'w-full px-1 rounded-xl border bg-gray-200'
 
@@ -14,18 +14,9 @@ class NewAccountForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('documentGroup','documentType','documentNo','document','payType','banka','description','price','documentDate','area','accomodation','supplier','project','documentImage')
+        fields = ('documentType','payType','banka','description','price','currencyUnit','documentDate','area','supplier','documentImage')
         widgets = {
-            'documentGroup': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
             'documentType': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'documentNo': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'document': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'payType': forms.Select(attrs={
@@ -40,6 +31,9 @@ class NewAccountForm(forms.ModelForm):
             'price': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
+            'currencyUnit': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
             'documentDate': forms.DateInput(attrs={
                 'class': INPUT_CLASSES,
                 'type' : "date"
@@ -49,13 +43,7 @@ class NewAccountForm(forms.ModelForm):
             'area': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
-            'accomodation': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
             'supplier': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'project': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'documentImage': forms.FileInput(attrs={
@@ -71,18 +59,9 @@ class NewGelirAccountForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('documentGroup','documentType','documentNo','document','payType','banka','description','price','documentDate','area','accomodation','supplier','project','documentImage')
+        fields = ('documentType','payType','banka','description','price','currencyUnit','documentDate','area','supplier','documentImage')
         widgets = {
-            'documentGroup': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
             'documentType': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'documentNo': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'document': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'payType': forms.Select(attrs={
@@ -97,6 +76,9 @@ class NewGelirAccountForm(forms.ModelForm):
             'price': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
+            'currencyUnit': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
             'documentDate': forms.DateInput(attrs={
                 'class': INPUT_CLASSES,
                 'type' : "date"
@@ -106,13 +88,7 @@ class NewGelirAccountForm(forms.ModelForm):
             'area': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
-            'accomodation': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
             'supplier': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'project': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'documentImage': forms.FileInput(attrs={
@@ -128,18 +104,9 @@ class EditAccountForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('documentGroup','documentType','documentNo','document','payType','banka','description','price','documentDate','area','accomodation','supplier','project','documentImage')
+        fields = ('documentType','payType','banka','description','price','currencyUnit','documentDate','area','supplier','documentImage')
         widgets = {
-            'documentGroup': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
             'documentType': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'documentNo': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'document': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'payType': forms.Select(attrs={
@@ -154,6 +121,9 @@ class EditAccountForm(forms.ModelForm):
             'price': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
+            'currencyUnit': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
             'documentDate': forms.DateInput(attrs={
                 'class': INPUT_CLASSES,
                 'type' : "date"
@@ -161,13 +131,7 @@ class EditAccountForm(forms.ModelForm):
             'area': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
-            'accomodation': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
             'supplier': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'project': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'documentImage': forms.FileInput(attrs={
@@ -183,18 +147,9 @@ class EditGelirAccountForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('documentGroup','documentType','documentNo','document','payType','banka','description','price','documentDate','area','accomodation','supplier','project','documentImage')
+        fields = ('documentType','payType','banka','description','price','currencyUnit','documentDate','area','supplier','documentImage')
         widgets = {
-            'documentGroup': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
             'documentType': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'documentNo': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'document': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'payType': forms.Select(attrs={
@@ -209,6 +164,9 @@ class EditGelirAccountForm(forms.ModelForm):
             'price': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
             }),
+            'currencyUnit': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
             'documentDate': forms.DateInput(attrs={
                 'class': INPUT_CLASSES,
                 'type' : "date"
@@ -216,16 +174,77 @@ class EditGelirAccountForm(forms.ModelForm):
             'area': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
-            'accomodation': forms.TextInput(attrs={
-                'class': INPUT_CLASSES
-            }),
             'supplier': forms.Select(attrs={
-                'class': INPUT_CLASSES
-            }),
-            'project': forms.Select(attrs={
                 'class': INPUT_CLASSES
             }),
             'documentImage': forms.FileInput(attrs={
                 'class': INPUT_CLASSES
             })
+        }
+
+class NewDebitForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super (NewDebitForm,self ).__init__(*args,**kwargs) # populates the post
+        self.fields['supplier'].queryset = Supplier.objects.filter(isSupplier=True)
+
+    class Meta:
+        model = Debit
+        fields = ('supplier','invoiceDate','invoicePrice','description','paymentTerm','area')
+        widgets = {
+            'supplier': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'paymentTerm': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'description': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoicePrice': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoiceDate': forms.DateInput(attrs={
+                'class': INPUT_CLASSES,
+                'type' : "date"
+                
+                }
+            ),
+            'area': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            })
+
+        }
+
+class EditDebitForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super (NewDebitForm,self ).__init__(*args,**kwargs) # populates the post
+        self.fields['supplier'].queryset = Supplier.objects.filter(isSupplier=True)
+
+    class Meta:
+        model = Debit
+        fields = ('supplier','invoiceDate','invoicePrice','description','paymentTerm','area')
+        widgets = {
+            'supplier': forms.Select(attrs={
+                'class': INPUT_CLASSES
+                
+            }),
+            'paymentTerm': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'description': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoicePrice': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoiceDate': forms.DateInput(attrs={
+                'class': INPUT_CLASSES,
+                'type' : "date"
+                
+                }
+            ),
+            'area': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            })
+
         }

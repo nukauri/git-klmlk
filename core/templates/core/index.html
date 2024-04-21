@@ -3,7 +3,7 @@
 {% block title %} Merhaba {% endblock %}
 {% block content %}
 
-<nav class="px-6 py-2 border-b bg-teal-800 items-center justify-between flex">
+<nav class="px-6 py-2 border-b bg-white items-center justify-between flex">
     
     <div class="col-span-1">
 
@@ -12,26 +12,27 @@
  
  
      <div>
-        <a href="{% url 'account:newGelir' %}" class="text-black px-12 text-2xl font-bold bg-sky-600 rounded-lg" >Yeni Gelir</a>
-         <a href="{% url 'account:new' %}" class="text-black px-12 text-2xl font-bold bg-sky-600 rounded-lg" >Yeni Gider</a>
+        <a href="{% url 'account:debit' %}" class="text-white px-12 text-xl font-bold bg-red-600 rounded-lg" >Borç Girişi</a>
+        <a href="{% url 'account:newGelir' %}" class="text-white px-12 text-xl font-bold bg-green-500 rounded-lg" >Yeni Gelir</a>
+         <a href="{% url 'account:new' %}" class="text-white px-12 text-xl font-bold bg-red-600 rounded-lg" >Yeni Gider</a>
      </div>
  
 </nav>
 
-<div class="mt-1 px-1 py-1 bg-teal-700 rounded-xl flex">
+<div class="mt-1 px-1 py-1 bg-teal-500 rounded-xl flex">
     <div class="flex-1">
-        <nav class="flex w-72 h-full bg-teal-500">
+        <nav class="flex w-72 h-full bg-teal-400">
             <div class="w-full flex mx-auto px-6 py-8">
                 <form method="get" action="{% url 'core:index'%}">
                     {{form.as_p}}
-                    <input type="submit" value="submit" class="items-center h-10 rounded-xl bg-teal-800"/>
+                    <input type="submit" value="submit" class="items-center h-10 rounded-xl bg-teal-800 mt-2"/>
                 </form>
             </div>
         </nav>
     </div>
  <div class="grid grid-cols-2" >
 
-    <div class="bg-teal-600 px-1 mt-1 w-200">
+    <div class="bg-teal-500 px-1 mt-1 w-200">
         <table class="table-fixed border-collapse border border-slate-400">
             <caption class="caption-top bg-slate-900 text-white">
                 Gelirler
@@ -50,7 +51,7 @@
                  <td class="border border-slate-300"><a href="{% url 'account:detailgl' account.id %}">{{ account.documentDate |date:"d/m/Y"}}</a></td>
                  <td class="border border-slate-300">{{ account.documentType }}</td>
                  <td class="border border-slate-300">{{ account.description }}</td>
-                 <td class="border border-slate-300">{{ account.price |floatformat:0 }}</td>
+                 <td class="border border-slate-300 text-right">{{ account.price |floatformat:"2g" }}</td>
             </tr>
             </a>
             {% endfor %}
@@ -75,7 +76,7 @@
     </div>
 
     
-    <div class="bg-teal-600 px-1 mt-1 w-120">
+    <div class="bg-teal-500 px-1 mt-1 w-120">
         <table class="table-fixed border-collapse border border-slate-400">
             <caption  class="caption-top bg-slate-900 text-white">
                 Giderler
@@ -94,7 +95,7 @@
                  <td class="border border-slate-300"><a href="{% url 'account:detail' account.id %}">{{ account.documentDate |date:"d/m/Y"}}</a></td>
                  <td class="border border-slate-300">{{ account.documentType }}</td>
                  <td class="border border-slate-300">{{ account.description }}</td>
-                 <td class="border border-slate-300">{{ account.price |floatformat:0 }}</td>
+                 <td class="border border-slate-300 text-right">{{ account.price |floatformat:"2g" }}</td>
             </tr>
             </a>
             {% endfor %}

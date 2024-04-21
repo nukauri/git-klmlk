@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import NewAccountForm,EditAccountForm,EditGelirAccountForm,NewGelirAccountForm
-from .models import Account
+from .forms import NewAccountForm,EditAccountForm,EditGelirAccountForm,NewGelirAccountForm,NewDebitForm,EditDebitForm
+from .models import Account,Debit
 
 from account.filters import AccountFilter
+from django.db.models import Sum
 
 # Create your views here.
 from account.api.serializers import AccountSerializer
@@ -108,3 +109,54 @@ def delete(request, pk):
     item.delete()
 
     return redirect('core:index')
+
+@login_required
+def deleteDebit(request, pk):
+    item = get_object_or_404(Debit, pk=pk)
+    item.delete()
+
+    return redirect('account:debit')
+
+@login_required
+def newDebit(request):
+    debitlist = Debit.objects.all()
+    total = Debit.objects.all().aggregate(total=Sum('invoicePrice'))['total']
+    if request.method == 'POST':
+        form = NewDebitForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.save()
+
+            
+    else:
+        form = NewDebitForm()
+
+    return render(request, 'core/debit.html', {
+        'form': form,
+        'title': 'Yeni Borç Girişi',
+        'debits':debitlist,
+        'total':total
+    })
+
+@login_required
+def editDebit(request, pk):
+    debitlist = Debit.objects.all()
+    debit = get_object_or_404(Debit, pk=pk, created_by=request.user)
+
+    if request.method == 'POST':
+        form = EditDebitForm(request.POST, request.FILES, instance=debit)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('account:debitdetail', pk=debit.id)
+    else:
+        form = EditDebitForm(instance=debit)
+
+    return render(request, 'core/debit.html', {
+        'form': form,
+        'title': 'Borç Güncelleme',
+        'debits':'debitlist'
+    })
