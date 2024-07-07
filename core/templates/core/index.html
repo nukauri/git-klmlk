@@ -3,7 +3,7 @@
 {% block title %} Merhaba {% endblock %}
 {% block content %}
 
-<nav class="px-6 py-2 border-b bg-white items-center justify-between flex">
+<nav class="px-6 py-1 border-b bg-white items-center justify-between flex">
     
     <div class="col-span-1">
 
@@ -12,6 +12,7 @@
  
  
      <div>
+        <a href="{% url 'account:credit' %}" class="text-white px-12 text-xl font-bold bg-green-500 rounded-lg" >Alacak Girişi</a>
         <a href="{% url 'account:debit' %}" class="text-white px-12 text-xl font-bold bg-red-600 rounded-lg" >Borç Girişi</a>
         <a href="{% url 'account:newGelir' %}" class="text-white px-12 text-xl font-bold bg-green-500 rounded-lg" >Yeni Gelir</a>
          <a href="{% url 'account:new' %}" class="text-white px-12 text-xl font-bold bg-red-600 rounded-lg" >Yeni Gider</a>
@@ -19,9 +20,9 @@
  
 </nav>
 
-<div class="mt-1 px-1 py-1 bg-teal-500 rounded-xl flex">
-    <div class="flex-1">
-        <nav class="flex w-72 h-full bg-teal-400">
+<div class="mt-1 px-1 py-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl flex">
+    <div class="flex-1 bg-gradient-to-r from-violet-500 to-fuchsia-500">
+        <nav class="flex w-48 h-full ">
             <div class="w-full flex mx-auto px-6 py-8">
                 <form method="get" action="{% url 'core:index'%}">
                     {{form.as_p}}
@@ -30,93 +31,87 @@
             </div>
         </nav>
     </div>
- <div class="grid grid-cols-2" >
+ <div class="grid grid-cols-2 w-full bg-gradient-to-r from-cyan-500 to-blue-500" >
 
-    <div class="bg-teal-500 px-1 mt-1 w-200">
+    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 px-1  w-3/3">
         <table class="table-fixed border-collapse border border-slate-400">
-            <caption class="caption-top bg-slate-900 text-white">
+            <caption class="caption-top bg-green-500 text-white">
                 Gelirler
             </caption>
             <thead class="bg-slate-700">
                 <tr>
                     <td class="border border-slate-300 text-white">Tarih</td>
-                    <td class="border border-slate-300 text-white">Doküman Tipi</td>
+                    <td class="border border-slate-300 text-white">Birim</td>
                     <td class="border border-slate-300 text-white">Açıklama</td>
                     <td class="border border-slate-300 text-white">Tutar</td>
                 </tr>
             </thead>
             {% for account in accounts %}
             <a href="{% url 'account:detailgl' account.id %}">
-                <tr>
+                <tr class="bg-white">
                  <td class="border border-slate-300"><a href="{% url 'account:detailgl' account.id %}">{{ account.documentDate |date:"d/m/Y"}}</a></td>
-                 <td class="border border-slate-300">{{ account.documentType }}</td>
+                 <td class="border border-slate-300">{{ account.area }}</td>
                  <td class="border border-slate-300">{{ account.description }}</td>
                  <td class="border border-slate-300 text-right">{{ account.price |floatformat:"2g" }}</td>
             </tr>
             </a>
             {% endfor %}
+            <tfoot  class="bg-slate-700">
+                <tr>
+                    <td colspan=3 class="border border-slate-300 text-white">TOPLAM</td>
+                    <td class="border border-slate-300 text-white">{{sumPrice1|floatformat:"2g"}}</td>
+                </tr>
+                {% if sumFark > 0 %}
+                <tr class="bg-green-500">
+                    <td colspan=3 class="border border-slate-300 text-white">FARK</td>
+                    <td class="border border-slate-300 text-white">{{sumFark|floatformat:"2g"}}</td>
+                </tr>
+                {% endif %}
+            </tfoot>
         </table>
-        <div class="pagination">
-            <span class="step-links">
-                {% if accounts.has_previous %}
-                    <a class="h-10 bg-blue-500  text-white" href="?page=1">&laquo; first</a>
-                    <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.previous_page_number }}">previous</a>
-                {% endif %}
-        
-                <span class="current">
-                    Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}.
-                </span>
-        
-                {% if accounts.has_next %}
-                    <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.next_page_number }}">next</a>
-                    <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
-        </div>  
+ 
     </div>
 
     
-    <div class="bg-teal-500 px-1 mt-1 w-120">
+    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 px-1  w-3/3">
         <table class="table-fixed border-collapse border border-slate-400">
-            <caption  class="caption-top bg-slate-900 text-white">
+            <caption  class="caption-top bg-red-600 text-white">
                 Giderler
             </caption>
             <thead  class="bg-slate-700">
                 <tr>
                     <td class="border border-slate-300 text-white">Tarih</td>
-                    <td class="border border-slate-300 text-white">Doküman Tipi</td>
+                    <td class="border border-slate-300 text-white">Birim</td>
+                    <td class="border border-slate-300 text-white">Tedarikçi</td>
                     <td class="border border-slate-300 text-white">Açıklama</td>
                     <td class="border border-slate-300 text-white">Tutar</td>
                 </tr>
             </thead>
             {% for account in accounts2 %}
             <a href="{% url 'account:detail' account.id %}">
-                <tr>
+                <tr class="bg-white">
                  <td class="border border-slate-300"><a href="{% url 'account:detail' account.id %}">{{ account.documentDate |date:"d/m/Y"}}</a></td>
-                 <td class="border border-slate-300">{{ account.documentType }}</td>
+                 <td class="border border-slate-300">{{ account.area }}</td>
+                 <td class="border border-slate-300">{{ account.supplier }}</td>
                  <td class="border border-slate-300">{{ account.description }}</td>
                  <td class="border border-slate-300 text-right">{{ account.price |floatformat:"2g" }}</td>
             </tr>
             </a>
             {% endfor %}
+            <tfoot  class="bg-slate-700">
+                <tr>
+                    <td colspan=4 class="border border-slate-300 text-white">TOPLAM</td>
+                    <td class="border border-slate-300 text-white">{{sumPrice2|floatformat:"2g"}}</td>
+                </tr>
+                {% if sumFark < 0 %}
+                <tr class="bg-red-600">
+                    <td colspan=4 class="border border-slate-300 text-white">FARK</td>
+                    <td class="border border-slate-300 text-white">{{sumFark|floatformat:"2g"}}</td>
+                </tr>
+                {% endif %}
+            </tfoot>
         </table>
-        <div class="pagination">
-            <span class="step-links">
-                {% if accounts.has_previous %}
-                    <a class="h-10 bg-blue-500  text-white" href="?page=1">&laquo; first</a>
-                    <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.previous_page_number }}">previous</a>
-                {% endif %}
-        
-                <span class="current">
-                    Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}.
-                </span>
-        
-                {% if accounts.has_next %}
-                    <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.next_page_number }}">next</a>
-                    <a class="h-10 bg-blue-500  text-white" href="?page={{ accounts.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
+
     </div>
     
  </div>

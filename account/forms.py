@@ -1,8 +1,8 @@
 from django import forms
+from datetime import date
 
 
-
-from .models import Account,Supplier,DocumentType,Debit
+from .models import Account,Supplier,DocumentType,Debit,Credit
 
 INPUT_CLASSES = 'w-full px-1 rounded-xl border bg-gray-200'
 
@@ -11,7 +11,7 @@ class NewAccountForm(forms.ModelForm):
         super (NewAccountForm,self ).__init__(*args,**kwargs) # populates the post
         self.fields['documentType'].queryset = DocumentType.objects.filter(accountType='GD')
         self.fields['supplier'].queryset = Supplier.objects.filter(isSupplier=True)
-
+        
     class Meta:
         model = Account
         fields = ('documentType','payType','banka','description','price','currencyUnit','documentDate','area','supplier','documentImage')
@@ -37,7 +37,7 @@ class NewAccountForm(forms.ModelForm):
             'documentDate': forms.DateInput(attrs={
                 'class': INPUT_CLASSES,
                 'type' : "date"
-                
+              
                 }
             ),
             'area': forms.Select(attrs={
@@ -82,7 +82,7 @@ class NewGelirAccountForm(forms.ModelForm):
             'documentDate': forms.DateInput(attrs={
                 'class': INPUT_CLASSES,
                 'type' : "date"
-                
+                                
                 }
             ),
             'area': forms.Select(attrs={
@@ -170,6 +170,7 @@ class EditGelirAccountForm(forms.ModelForm):
             'documentDate': forms.DateInput(attrs={
                 'class': INPUT_CLASSES,
                 'type' : "date"
+                
             }),
             'area': forms.Select(attrs={
                 'class': INPUT_CLASSES
@@ -225,6 +226,74 @@ class EditDebitForm(forms.ModelForm):
         fields = ('supplier','invoiceDate','invoicePrice','description','paymentTerm','area')
         widgets = {
             'supplier': forms.Select(attrs={
+                'class': INPUT_CLASSES
+                
+            }),
+            'paymentTerm': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'description': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoicePrice': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoiceDate': forms.DateInput(attrs={
+                'class': INPUT_CLASSES,
+                'type' : "date"
+                
+                }
+            ),
+            'area': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            })
+
+        }
+
+
+class NewCreditForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super (NewCreditForm,self ).__init__(*args,**kwargs) # populates the post
+        self.fields['customer'].queryset = Supplier.objects.filter(isCustomer=True)
+
+    class Meta:
+        model = Credit
+        fields = ('customer','invoiceDate','invoicePrice','description','paymentTerm','area')
+        widgets = {
+            'customer': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'paymentTerm': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'description': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoicePrice': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'invoiceDate': forms.DateInput(attrs={
+                'class': INPUT_CLASSES,
+                'type' : "date"
+                
+                }
+            ),
+            'area': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            })
+
+        }
+
+class EditCreditForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super (NewCreditForm,self ).__init__(*args,**kwargs) # populates the post
+        self.fields['customer'].queryset = Supplier.objects.filter(isCustomer=True)
+
+    class Meta:
+        model = Credit
+        fields = ('customer','invoiceDate','invoicePrice','description','paymentTerm','area')
+        widgets = {
+            'customer': forms.Select(attrs={
                 'class': INPUT_CLASSES
                 
             }),

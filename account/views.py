@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import NewAccountForm,EditAccountForm,EditGelirAccountForm,NewGelirAccountForm,NewDebitForm,EditDebitForm
-from .models import Account,Debit
+from .forms import NewAccountForm,EditAccountForm,EditGelirAccountForm,NewGelirAccountForm,NewDebitForm,EditDebitForm,EditCreditForm,NewCreditForm
+from .models import Account,Debit,Credit
 
 from account.filters import AccountFilter
 from django.db.models import Sum
@@ -11,6 +11,8 @@ from django.db.models import Sum
 from account.api.serializers import AccountSerializer
 from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
+
+
 
 class AccountListAPIView(ListAPIView):
     queryset = Account.objects.all()
@@ -159,4 +161,55 @@ def editDebit(request, pk):
         'form': form,
         'title': 'Borç Güncelleme',
         'debits':'debitlist'
+    })
+
+@login_required
+def deleteCredit(request, pk):
+    item = get_object_or_404(Credit, pk=pk)
+    item.delete()
+
+    return redirect('account:credit')
+
+@login_required
+def newCredit(request):
+    creditlist = Credit.objects.all()
+    total = Credit.objects.all().aggregate(total=Sum('invoicePrice'))['total']
+    if request.method == 'POST':
+        form = NewCreditForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.save()
+
+            
+    else:
+        form = NewCreditForm()
+
+    return render(request, 'core/credit.html', {
+        'form': form,
+        'title': 'Yeni Alacak Girişi',
+        'debits':creditlist,
+        'total':total
+    })
+
+@login_required
+def editCredit(request, pk):
+    creditlist = Credit.objects.all()
+    credit = get_object_or_404(Credit, pk=pk, created_by=request.user)
+
+    if request.method == 'POST':
+        form = EditCreditForm(request.POST, request.FILES, instance=credit)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('account:creditdetail', pk=credit.id)
+    else:
+        form = EditCreditForm(instance=credit)
+
+    return render(request, 'core/credit.html', {
+        'form': form,
+        'title': 'Alacak Güncelleme',
+        'credits':'creditlist'
     })

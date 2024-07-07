@@ -15,23 +15,38 @@ from account.filters import AccountFilter
 @login_required
 def index(request):
     accountlists=Account.objects.filter(documentType__accountType="Gelir")
-    account_filter = AccountFilter(request.GET,queryset=Account.objects.filter(documentType__accountType="GL"))
+    account_filter = AccountFilter(request.GET,queryset=Account.objects.filter(documentType__accountType="GL").order_by("-documentDate"))
 
-    paginator = Paginator(account_filter.qs,5)
+    paginator = Paginator(account_filter.qs,100)
     page_number = request.GET.get("page")
     accounts=paginator.get_page(page_number)
 
     accountlists2=Account.objects.all()
-    account_filter2 = AccountFilter(request.GET,queryset=Account.objects.filter(documentType__accountType="GD"))
+    account_filter2 = AccountFilter(request.GET,queryset=Account.objects.filter(documentType__accountType="GD").order_by("-documentDate"))
 
-    paginator2 = Paginator(account_filter2.qs,5)
+    paginator2 = Paginator(account_filter2.qs,100)
     page_number2 = request.GET.get("page")
     accounts2=paginator2.get_page(page_number2)
+
+    
+    sumPrice1 = 0
+    for obj in account_filter.qs:
+        sumPrice1 = sumPrice1 + obj.price
+
+    sumPrice2 = 0
+    for obj in account_filter2.qs:
+        sumPrice2 = sumPrice2 + obj.price
+
+    sumFark = sumPrice1 - sumPrice2
 
     context = {
         'form':account_filter.form,
         'accounts':accounts,
-        'accounts2':accounts2
+        'accounts2':accounts2,
+        'sumPrice1':sumPrice1,
+        'sumPrice2':sumPrice2,
+        'sumFark':sumFark
+       
 
     }
 

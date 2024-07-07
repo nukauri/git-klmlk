@@ -38,6 +38,20 @@ class Debit(models.Model):
         return self.supplier
     
 
+class Credit(models.Model):
+    customer = models.ForeignKey(Supplier,related_name='credits',on_delete=models.CASCADE)
+    invoiceDate = models.DateField(blank=True,null=True)
+    invoicePrice = models.FloatField(blank=True,null=True)
+    description = models.CharField(max_length=255,blank=True,null=True)
+    paymentTerm = models.IntegerField(blank=True,null=True)
+    area = models.ForeignKey(area_models.Area,related_name='credits',on_delete=models.CASCADE,blank=True,null=True)
+
+    class Meta:
+        ordering = ('customer',)
+        verbose_name_plural = 'Credits'
+
+    def __str__(self):
+        return self.customer
     
 
 class DocumentGroup(models.Model):
@@ -113,7 +127,7 @@ class CurrencyUnit(models.Model):
 
 
 class Account(models.Model):
-    documentType = models.ForeignKey(DocumentType,related_name='accounts',on_delete=models.CASCADE)
+    documentType = models.ForeignKey(DocumentType,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
     payType = models.ForeignKey(PayType,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
     banka = models.ForeignKey(Banka,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
     documentDate = models.DateField()

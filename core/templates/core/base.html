@@ -9,19 +9,19 @@
 </head>
 <body>
   
-  <nav class="py-6 px-8 bg-amber-500 items-center justify-between flex">
+  <nav class="py-1 px-8 bg-gradient-to-r from-amber-500 to-blue-500 items-center justify-between flex">
    
    <img class="object-fill h-16 w-32" src="{% static 'egeartlogo.jpeg'%}">
 
     <div>
       
         {% if request.user.is_authenticated %}
-        <a href="{% url 'index' %}" class="text-white py-4 px-8 bg-green-500  rounded-lg" >Konaklama</a>
-        <a href="{% url 'index' %}" class="text-white py-4 px-8 bg-green-500  rounded-lg" >Gelir/Gider</a>
-        <a href="{% url 'core:logout' %}" class="text-white py-4 px-8 bg-red-700 rounded-lg" >Çıkış</a>
+        <a href="{% url 'index' %}" class="text-white text-xl font-bold py-2 px-8 bg-green-500  rounded-lg" >Konaklama</a>
+        <a href="{% url 'index' %}" class="text-white text-xl font-bold py-2 px-8 bg-green-500  rounded-lg" >Gelir/Gider</a>
+        <a href="{% url 'core:logout' %}" class="text-white text-xl font-bold  py-2 px-8 bg-red-700 rounded-lg" >Çıkış</a>
         {% else %}
-        <a href="{% url 'core:login' %}" class="text-white py-4 px-8 bg-slate-600  rounded-lg" >Giriş</a>
-        <a href="{% url 'core:signup' %}" class="text-white py-4 px-8 bg-sky-600 rounded-lg" >Kayıt</a>
+        <a href="{% url 'core:login' %}" class="text-white text-xl font-bold py-2 px-8 bg-slate-600  rounded-lg" >Giriş</a>
+        <a href="{% url 'core:signup' %}" class="text-white text-xl font-bold py-2 px-8 bg-sky-600 rounded-lg" >Kayıt</a>
         {% endif %}
     </div>
 

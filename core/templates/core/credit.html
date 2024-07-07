@@ -24,12 +24,12 @@
     <div class="flex-1">
         <nav class="flex w-75 h-full bg-green-400">
             <div class="w-full flex mx-auto px-6 py-8">
-                <form method="post" action="{% url 'account:debit'%}">
+                <form method="post" action="{% url 'account:credit'%}">
                     {% csrf_token %}
                     <div class="flex flex-col">
                         <div class="mb-1 mx-3">
-                            <label class="inline-block mb-2">Tedarikçi</label><br>
-                            {{ form.supplier }}
+                            <label class="inline-block mb-2">Müşteri</label><br>
+                            {{ form.customer }}
                         </div>
                         <div class="mb-1 mx-3">
                             <label class="inline-block mb-2">Fat.Tarihi</label><br>
@@ -65,12 +65,12 @@
 
     <div class="bg-green-500 px-1 mt-1">
         <table class="table border-collapse border border-slate-400 ">
-            <caption class="caption-top bg-red-600 text-white">
-                Borçlar
+            <caption class="caption-top bg-green-500 text-white">
+                Alacaklar
             </caption>
             <thead class="bg-slate-700">
                 <tr>
-                    <td class="border border-slate-300 text-white ">Tedarikçi</td>
+                    <td class="border border-slate-300 text-white ">Müşteri</td>
                     <td class="border border-slate-300 text-white">Fat.Tarihi</td>
                     <td class="border border-slate-300 text-white ">Fat.Tutarı</td>
                     <td class="border border-slate-300 text-white">Vadesi</td>
@@ -79,15 +79,15 @@
                     <td class="border border-slate-300 text-white ">Sil</td>
                 </tr>
             </thead>
-            {% for debit in debits %}
+            {% for credit in credits %}
             <tr class="bg-white">
-                <td class="border border-slate-300">{{ debit.supplier}}</td>
-                <td class="border border-slate-300">{{ debit.invoiceDate |date:"d/m/Y"}}</td>
-                <td class="border border-slate-300 text-right">{{ debit.invoicePrice|floatformat:"2g"}}</td>
-                <td class="border border-slate-300 text-right">{{ debit.paymentTerm }}</td>
-                <td class="border border-slate-300">{{ debit.description }}</td>
-                <td class="border border-slate-300">{{ debit.area }}</td>
-                <td class="border border-slate-300"><a  href="{% url 'account:deleteDebit' debit.id %}">Sil</a></td>
+                <td class="border border-slate-300">{{ credit.customer}}</td>
+                <td class="border border-slate-300">{{ credit.invoiceDate |date:"d/m/Y"}}</td>
+                <td class="border border-slate-300 text-right">{{ credit.invoicePrice|floatformat:"2g"}}</td>
+                <td class="border border-slate-300 text-right">{{ credit.paymentTerm }}</td>
+                <td class="border border-slate-300">{{ credit.description }}</td>
+                <td class="border border-slate-300">{{ credit.area }}</td>
+                <td class="border border-slate-300"><a  href="{% url 'account:deleteCredit' credit.id %}">Sil</a></td>
             </tr>
             
             {% endfor %}
