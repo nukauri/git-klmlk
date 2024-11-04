@@ -127,7 +127,7 @@ class CurrencyUnit(models.Model):
 
 
 class Account(models.Model):
-    documentType = models.ForeignKey(DocumentType,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
+    documentType = models.ForeignKey(DocumentType,related_name='accounts',on_delete=models.CASCADE)
     payType = models.ForeignKey(PayType,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
     banka = models.ForeignKey(Banka,related_name='accounts',on_delete=models.CASCADE,blank=True,null=True)
     documentDate = models.DateField()

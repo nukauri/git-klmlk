@@ -3,10 +3,12 @@ from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth import logout
+from django.http import HttpResponse
 
 # Create your views here.
 
 from account.models import Supplier,DocumentType,Project,Account
+from account.resourcess import AccountResource
 
 
 from .forms import SignupForm
@@ -53,6 +55,41 @@ def index(request):
 
     return render(request,'core/index.html', context)
 
+
+@login_required
+def list(request):
+    accountlists=Account.objects.filter(documentType__accountType="Gelir")
+    account_filter = AccountFilter(request.GET,queryset=Account.objects.filter(documentType__accountType="GL").order_by("-documentDate"))
+
+    accountlists2=Account.objects.all()
+    account_filter2 = AccountFilter(request.GET,queryset=Account.objects.filter(documentType__accountType="GD").order_by("-documentDate"))
+
+
+    
+    sumPrice1 = 0
+    for obj in account_filter.qs:
+        sumPrice1 = sumPrice1 + obj.price
+
+    sumPrice2 = 0
+    for obj in account_filter2.qs:
+        sumPrice2 = sumPrice2 + obj.price
+
+    sumFark = sumPrice1 - sumPrice2
+
+    context = {
+        'form':account_filter.form,
+        'accounts':account_filter.qs,
+        'accounts2':account_filter2.qs,
+        'sumPrice1':sumPrice1,
+        'sumPrice2':sumPrice2,
+        'sumFark':sumFark
+       
+
+    }
+
+
+    return render(request,'core/list.html', context)
+
 def about(request):
     return render(request, 'core/about.html')
 
@@ -75,3 +112,34 @@ def logout_view(request):
     logout(request)
     return redirect('/login/')
 
+@login_required
+def exportGL(request):
+
+    if request.htmx:
+        return HttpResponse(headers={'HX-Redirect':request.get_full_path()})
+    
+    account_filter = AccountFilter(
+        request.GET,
+        queryset=Account.objects.filter(documentType__accountType="GL").order_by("-documentDate")
+    )
+
+    datagl=AccountResource().export(account_filter.qs)
+    response=HttpResponse(datagl.csv)
+    response['Content-Disposition'] = 'attachment; filename="gelirler.csv"'
+    return response
+
+@login_required
+def exportGD(request):
+
+    if request.htmx:
+        return HttpResponse(headers={'HX-Redirect':request.get_full_path()})
+    
+    account_filter = AccountFilter(
+        request.GET,
+        queryset=Account.objects.filter(documentType__accountType="GD").order_by("-documentDate")
+    )
+
+    datagd=AccountResource().export(account_filter.qs)
+    response=HttpResponse(datagd.csv)
+    response['Content-Disposition'] = 'attachment; filename="giderler.csv"'
+    return response

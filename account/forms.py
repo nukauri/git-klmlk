@@ -3,6 +3,7 @@ from datetime import date
 
 
 from .models import Account,Supplier,DocumentType,Debit,Credit
+from area.models import Area
 
 INPUT_CLASSES = 'w-full px-1 rounded-xl border bg-gray-200'
 
@@ -317,3 +318,9 @@ class EditCreditForm(forms.ModelForm):
             })
 
         }
+
+class ReportForm(forms.Form):
+    startDate = forms.DateField(required=False,widget=forms.DateInput(attrs={'class': INPUT_CLASSES,'type':'date'}))
+    endDate   = forms.DateField(required=False,widget=forms.DateInput(attrs={'class': INPUT_CLASSES,'type':'date'}))
+    birim     = forms.ModelChoiceField(queryset=Area.objects.all(),required=False,widget=forms.Select(
+            attrs={'class': INPUT_CLASSES}))

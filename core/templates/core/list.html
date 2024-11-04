@@ -44,7 +44,7 @@
     <div class="flex-1 bg-gradient-to-r from-violet-500 to-fuchsia-500">
         <nav class="flex w-48 h-full ">
             <div class="w-full flex flex-row md:flex-col mx-auto px-6 py-8">
-                <form method="get" action="{% url 'core:index'%}">
+                <form method="get" id="filterform" action="{% url 'core:list'%}">
                     {{form.as_p}}
                     <input type="submit" value="GETİR" class="items-center h-10 w-20 text-white font-bold rounded-xl bg-teal-700 hover:bg-teal-800 mt-2"/>
                 </form>
@@ -54,10 +54,16 @@
  <div class="flex flex-col md:flex-row w-full bg-gradient-to-r from-cyan-500 to-blue-500" >
 
     <div class="bg-gradient-to-r from-cyan-500 to-blue-500 px-1  w-1/2">
+        <div  class="caption-top bg-green-600 text-white flex flex-row justify-between">
+            <div>Gelirler</div>
+            <a hx-get="{% url 'core:exportGL' %}" hx-include="#filterform">
+            <div class="bg-green-800  hover:cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg></div>
+            </a>
+        </div>
         <table class="table-fixed border-collapse border border-slate-400 ">
-            <caption class="caption-top bg-green-500 text-white">
-                Gelirler
-            </caption>
+
             <thead class="bg-slate-700">
                 <tr >
                     <td class="border border-slate-300 text-white">Tarih</td>
@@ -89,31 +95,22 @@
                 {% endif %}
             </tfoot>
         </table>
-        <div class="pagination">
-            <span class="step-links">
-                {% if accounts.has_previous %}
-                    <a href="?page=1">&laquo; ilksayfa</a>
-                    <a href="?page={{ accounts.previous_page_number }}">önceki</a>
-                {% endif %}
-        
-                <span class="current">
-                    Sayfa {{ accounts.number }} // {{ accounts.paginator.num_pages }}.
-                </span>
-        
-                {% if accounts.has_next %}
-                    <a href="?page={{ accounts.next_page_number }}">sonraki</a>
-                    <a href="?page={{ accounts.paginator.num_pages }}">sonsayfa &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
+
     </div>
 
     
     <div class="bg-gradient-to-r from-cyan-500 to-blue-500 px-1  w-1/2">
+        <div  class="caption-top bg-red-600 text-white flex flex-row justify-between">
+            <div>Giderler</div>
+            <a hx-get="{% url 'core:exportGD' %}" hx-include="#filterform">
+            <div class="bg-red-800 hover:cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg></div>
+            </a>
+        </div>
         <table class="table-fixed border-collapse border border-slate-400">
-            <caption  class="caption-top bg-red-600 text-white">
-                Giderler
-            </caption>
+
+            
             <thead  class="bg-slate-700">
                 <tr>
                     <td class="border border-slate-300 text-white">Tarih</td>
@@ -147,23 +144,7 @@
                 {% endif %}
             </tfoot>
         </table>
-        <div class="pagination">
-            <span class="step-links">
-                {% if accounts2.has_previous %}
-                    <a href="?page=1">&laquo; ilksayfa</a>
-                    <a href="?page={{ accounts2.previous_page_number }}">önceki</a>
-                {% endif %}
-        
-                <span class="current">
-                    Sayfa {{ accounts2.number }} // {{ accounts2.paginator.num_pages }}.
-                </span>
-        
-                {% if accounts2.has_next %}
-                    <a href="?page={{ accounts2.next_page_number }}">sonraki</a>
-                    <a href="?page={{ accounts2.paginator.num_pages }}">sonsayfa &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
+
     </div>
     
  </div>

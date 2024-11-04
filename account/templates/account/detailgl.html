@@ -3,32 +3,32 @@
 {% block title %}{{ account.description}} {% endblock %}
 
 {% block content%}
-<div class="grid grid-cols-5 gap-6">
+<div class="flex flex-col md:flex-row">
 
-    <div class="col-span-3">
+    <div class="m-1 p-1">
         {% if account.documentImage %}
         <img src="{{ account.documentImage.url}}" class="rounded-xl">
         {% endif %}
     </div>
-    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
-        <h1 class="mb-6 text-3xl">Birim:{{ account.area }}</h1>
-        <h2 class="mb-6 text-2xl">Belge Türü:{{  account.documentType }}</h2>
-        <h2 class="mb-6 text-2xl">Tarih:{{ account.documentDate |date:"d/m/Y" }}</h2>
+    <div class="flex flex-col p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl bg-slate-500">Birim:{{ account.area }}</h1>
+        <h2 class="mb-6 text-2xl bg-slate-500">Belge Türü:{{  account.documentType }}</h2>
+        <h2 class="mb-6 text-2xl bg-slate-500">Tarih:{{ account.documentDate |date:"d/m/Y" }}</h2>
         {% if account.description %}
-            <p class="text-gray-700">
+            <p class="text-gray-700 bg-slate-500">
                 <strong class="text-gray-500">Açıklama:</strong><br>
                 {{ account.description }}
             </p>
         {% endif %}
-        <p class="text-gray-500"><strong>Tutar: </strong>{{ account.price }}{{ account.currencyUnit }}</p>
-        <p class="text-gray-500"><strong>Satıcı: </strong>{{ account.supplier }}</p>
-        <p class="text-gray-500"><strong>Ödeme Tipi: </strong>{{ account.payType }}</p>
-        <p class="text-gray-500"><strong>Banka: </strong>{{ account.banka }}</p>
+        <p class="text-gray-500 bg-slate-500"><strong>Tutar: </strong>{{ account.price }}{{ account.currencyUnit }}</p>
+        <p class="text-gray-500 bg-slate-500"><strong>Satıcı: </strong>{{ account.supplier }}</p>
+        <p class="text-gray-500 bg-slate-500"><strong>Ödeme Tipi: </strong>{{ account.payType }}</p>
+        <p class="text-gray-500 bg-slate-500"><strong>Banka: </strong>{{ account.banka }}</p>
     
 
 
 
-            <div class="mt-6 p-6 bg-white rounded-xl">
+            <div class="mt-6 p-6  bg-slate-500 rounded-xl">
                 
 
                 <a href="{% url 'account:editGelir' account.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Düzenle</a>

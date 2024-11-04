@@ -8,7 +8,9 @@ app_name = 'core'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    
+    path('list', views.list, name='list'),
+    path('exportGD', views.exportGD, name='exportGD'),
+    path('exportGL', views.exportGL, name='exportGL'),
     path('signup/', views.signup, name='signup'),
     path('logout/',views.logout_view,name='logout'),
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html', authentication_form=LoginForm), name='login'),
